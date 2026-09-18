@@ -1,3 +1,6 @@
+from sqlalchemy import text
+from app.core.database import engine
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -13,5 +16,10 @@ app.add_middleware(
 
 
 @app.get("/")
-def root():
-    return {"message": "AI Resume Analyzer API is running"}
+async def root():
+    async with engine.connect() as conn:
+        result = await conn.execute(text("SELECT 1"))
+        return {
+            "message": "AI Resume Analyzer API is running",
+            "database": result.scalar(),
+        }
