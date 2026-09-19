@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
+from app.core.dependencies import get_current_user
 from app.core.security import (
     hash_password,
     verify_password,
@@ -75,3 +76,12 @@ async def login(
     access_token=access_token,
     token_type="bearer",
 )
+
+@router.get("/me")
+async def get_me(
+    current_user: User = Depends(get_current_user),
+):
+    return {
+        "id": current_user.id,
+        "email": current_user.email,
+    }

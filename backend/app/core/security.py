@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 import bcrypt
 import jwt
 
@@ -19,7 +21,14 @@ def verify_password(password: str, hashed_password: str) -> bool:
 
 
 def create_access_token(user_id: int) -> str:
-    payload = {"user_id": user_id}
+    expiration = datetime.now(timezone.utc) + timedelta(
+        minutes=settings.access_token_expire_minutes
+    )
+
+    payload = {
+        "user_id": user_id,
+        "exp": expiration,
+    }
 
     return jwt.encode(
         payload,
