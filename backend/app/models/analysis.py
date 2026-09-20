@@ -14,6 +14,9 @@ class Analysis(Base):
     )
 
     score: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    summary: Mapped[str | None] = mapped_column(Text, nullable=True)
+    skills_detected: Mapped[str | None] = mapped_column(Text, nullable=True)
+    missing_sections: Mapped[str | None] = mapped_column(Text, nullable=True)
     strengths: Mapped[str | None] = mapped_column(Text, nullable=True)
     weaknesses: Mapped[str | None] = mapped_column(Text, nullable=True)
     suggestions: Mapped[str | None] = mapped_column(Text, nullable=True)
