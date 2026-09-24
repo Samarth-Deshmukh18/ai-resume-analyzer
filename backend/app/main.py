@@ -6,11 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.auth import router as auth_router
 from app.api.v1.resumes import router as resumes_router
 from app.api.v1.analysis import router as analysis_router
+from app.api.v1.job_match import router as job_match_router
 
 app = FastAPI()
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(resumes_router, prefix="/api/v1")
 app.include_router(analysis_router, prefix="/api/v1")
+app.include_router(job_match_router, prefix="/api/v1")
 
 app.add_middleware(
     CORSMiddleware,

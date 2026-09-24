@@ -1,3 +1,4 @@
+"use client";
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-zinc-900">
@@ -28,9 +29,13 @@ export default function Home() {
           <button className="hidden rounded-lg px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 sm:block">
             Log in
           </button>
-          <button className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
-            Get started
-          </button>
+         
+          <button
+  onClick={() => window.location.href = "/login"}
+  className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+>
+  Get started
+</button>
         </div>
       </nav>
 
