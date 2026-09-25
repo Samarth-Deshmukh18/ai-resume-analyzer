@@ -1,10 +1,36 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    router.push("/dashboard");
+  }
+}, [router]);
+  const handleLogin = async () => {
+  const res = await fetch("http://127.0.0.1:8000/api/v1/auth/login", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    email,
+    password,
+  }),
+});
+
+    const data = await res.json()
+    localStorage.setItem("token", data.access_token);
+router.push("/dashboard");
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-zinc-100">
@@ -28,7 +54,7 @@ export default function LoginPage() {
         />
 
         <button
-          onClick={() => alert(`Email: ${email}`)}
+          onClick={handleLogin}
           className="w-full rounded-lg bg-black p-3 text-white hover:bg-zinc-800"
         >
           Log in
